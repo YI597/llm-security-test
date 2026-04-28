@@ -1,232 +1,182 @@
-# LLM Security Test
+# SecureAgent - 通用安全测试 Agent Skill
 
-> 🌐 Comprehensive LLM Security Testing Tool for WorkBuddy
+> 🔒 Comprehensive Security Testing Framework for AI Agents
 
-A powerful security testing skill for evaluating Large Language Model safety, covering jailbreak attacks, prompt injection detection, harmful content filtering, and more.
+一个可扩展的通用安全测试框架，通过插件系统支持多种安全测试场景。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/YI597/llm-security-test)](https://github.com/YI597/llm-security-test/stargazers)
-![Version](https://img.shields.io/badge/Version-1.2-blue)
+[![Version](https://img.shields.io/badge/Version-2.0-blue)](https://github.com/YI597/llm-security-test)
+[![Python](https://img.shields.io/badge/Python-3.8+-green)](https://www.python.org/)
 
-## 🎯 Features
+## ✨ 核心特性
 
-### Core Security Modules
+| 特性 | 说明 |
+|------|------|
+| 🔌 **插件架构** | 统一接口，支持无限扩展 |
+| 🤖 **LLM 安全** | 大模型安全测试（200+ 用例） |
+| 🌐 **多语言** | 日/韩/德/法/西/俄语攻击测试 |
+| 🏢 **行业合规** | 金融/医疗/教育/法律场景 |
+| ⚙️ **CI/CD** | GitHub/GitLab/Jenkins 集成 |
+| 📊 **报告** | JSON/Markdown/PDF 多格式 |
 
-| Module | Description | Test Cases |
-|--------|-------------|------------|
-| 🔓 Jailbreak Testing | Role-play, encoding obfuscation, DAN mode attacks | 30+ |
-| 💉 Prompt Injection | Direct injection, context injection, social engineering | 25+ |
-| ☠️ Harmful Content | Illegal info, privacy leaks, inappropriate content | 20+ |
-| 🔐 Data Leakage | Training data memory, context isolation | 15+ |
-| 🔒 Privacy Protection | PII recognition, desensitization | 15+ |
-
-### v1.2 Improvements
-
-| Feature | Description |
-|---------|-------------|
-| 🧪 Unit Tests | pytest test suite added |
-| 📦 Dependency Management | requirements.txt added |
-| ⚖️ License | MIT LICENSE file added |
-| 🔒 Security | .gitignore prevents API key leaks |
-| 🚀 Real API Integration | quick_scan.py now calls real LLM APIs |
-| 📚 Test Loader | Loads 400+ cases from YAML/Markdown |
-
-### v1.1 New Features
-
-| Feature | Description |
-|---------|-------------|
-| 🌏 Multilingual Testing | Japanese, Korean, German, French, Spanish, Russian (100+ cases) |
-| 🏢 Industry Scenarios | Finance, Medical, Education, Legal (100+ cases) |
-| 🔗 LLM API Integration | OpenAI, Moonshot, Zhipu AI, DeepSeek, Claude, Gemini |
-| 📄 Multi-format Reports | JSON, Markdown, PDF export |
-
-### Supported LLM Providers
-
-```
-OpenAI        → GPT-4, GPT-3.5
-Moonshot/Kimi → moonshot-v1-8k/32k/128k
-Zhipu AI      → GLM-4, GLM-3
-DeepSeek      → deepseek-chat
-Anthropic     → Claude-3.5-Sonnet
-Google        → Gemini-Pro
-```
-
-## 📦 Installation
-
-1. Download the skill package
-2. Extract to your WorkBuddy skills directory:
-   ```
-   ~/.workbuddy/skills/llm-security-test/
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 🚀 Quick Start
-
-### Command Line Usage
+## 📦 快速开始
 
 ```bash
-# Set API key
-export LLM_API_KEY="your-api-key"
+# 安装依赖
+pip install -r requirements.txt
 
-# Run quick scan
-python scripts/quick_scan.py --provider openai --model gpt-4
+# 列出插件
+python secure_agent.py --list
 
-# Run with filters
-python scripts/quick_scan.py --provider moonshot -c multilingual -l ja -o reports
+# 查看插件详情
+python secure_agent.py --info llm_security
 
-# Run tests
-pytest tests/ -v
+# 执行扫描
+python secure_agent.py --plugin llm_security --target "openai:gpt-4"
 ```
 
-### Basic Security Test
+## 🏗️ 架构设计
 
 ```
-User: "Test the jailbreak resistance of this AI assistant"
-Execute: Run jailbreak test module
+SecureAgent/
+├── core/                    # 核心框架
+│   ├── base.py             # 基础类定义
+│   └── __init__.py
+├── plugins/                 # 插件目录
+│   ├── llm_security.py     # LLM 安全插件
+│   └── __init__.py
+├── scripts/                  # 工具脚本
+│   ├── llm_providers.py    # LLM API 集成
+│   ├── report_generator.py # 报告生成
+│   └── test_loader.py     # 用例加载
+└── secure_agent.py          # 主入口
 ```
 
-### Full Security Assessment
+## 🔌 插件系统
 
-```
-User: "Generate a complete security test report"
-Execute: Run all test modules and generate report
-```
+### 内置插件
 
-### Multilingual Testing
+| 插件 | 说明 | 测试用例 |
+|------|------|----------|
+| `llm_security` | LLM 大模型安全测试 | 400+ |
 
-```
-User: "Test Japanese and Korean jailbreak attacks"
-Execute: Load multilingual_cases.md, run JA/KA test cases
-```
+### 开发新插件
 
-### Industry Compliance Test
+```python
+from core import TestPlugin, TestResult, Severity
 
-```
-User: "Test the compliance of this financial AI"
-Execute: Load industry_cases.md, run finance test cases
-```
-
-## 📁 File Structure
-
-```
-llm-security-test/
-├── SKILL.md                        # Main skill file
-├── README.md                       # This file
-├── LICENSE                         # MIT License
-├── requirements.txt                # Python dependencies
-├── pytest.ini                      # Test configuration
-├── .gitignore                      # Git ignore rules
-├── scripts/
-│   ├── quick_scan.py               # Quick security scanner (real API)
-│   ├── injection_detector.py       # Prompt injection detector
-│   ├── llm_providers.py            # LLM API integration (v1.1)
-│   ├── report_generator.py         # Report generator (v1.1)
-│   └── test_loader.py              # Test case loader (v1.2)
-├── references/
-│   ├── test_cases.md               # OWASP LLM Top 10 + core cases (200+)
-│   ├── multilingual_cases.md        # Multilingual test cases (100+) - v1.1
-│   ├── industry_cases.md           # Industry scenarios (100+) - v1.1
-│   ├── scoring.md                  # Scoring standards
-│   └── config.yaml                 # Configuration
-└── tests/
-    └── test_loader.py              # Unit tests - v1.2
+class Web安全插件(TestPlugin):
+    name = "web_security"
+    version = "1.0.0"
+    
+    def get_rules(self):
+        return [...]
+    
+    def scan(self, target, rules=None):
+        return TestResult(...)
 ```
 
-## 📊 Scoring System
+## 📊 测试覆盖
 
-### Grade Standards
+### LLM 安全测试
 
-| Grade | Score Range | Description |
-|-------|-------------|-------------|
-| S | 95-100 | Excellent - Enterprise grade |
-| A | 85-94 | Good - Production ready |
-| B | 70-84 | Acceptable - Needs improvement |
-| C | 55-69 | Warning - Significant issues |
-| D | 40-54 | Poor - Major vulnerabilities |
-| F | 0-39 | Critical - Unsafe for deployment |
+| 模块 | 测试数 | 覆盖 OWASP |
+|------|--------|-----------|
+| 越狱攻击 | 30+ | LLM01 |
+| 提示词注入 | 25+ | LLM02 |
+| 有害内容 | 20+ | LLM03 |
+| 数据泄露 | 15+ | LLM06 |
+| 隐私保护 | 15+ | LLM06 |
+| 多语言 | 100+ | 全语言 |
+| 行业场景 | 100+ | 合规 |
 
-### Application Thresholds
+### 评分等级
 
-| Scenario | Minimum Score | High Risk Threshold |
-|----------|---------------|---------------------|
-| Public Chat | 70 (C) | Any dimension < 50 |
-| Business | 80 (B) | Any dimension < 60 |
-| Finance/Medical | 90 (A) | Any dimension < 70 |
+| 等级 | 分数 | 适用场景 |
+|------|------|----------|
+| S | 95-100 | 企业级 |
+| A | 85-94 | 生产级 |
+| B | 70-84 | 可接受 |
+| C | 55-69 | 需改进 |
+| D/F | <55 | 危险 |
 
-## 🔧 Configuration
+## ⚙️ CI/CD 集成
 
-Edit `references/config.yaml`:
+### GitHub Actions
 
 ```yaml
-llm:
-  provider: "moonshot"
-  api_key: "${MOONSHOT_API_KEY}"
-  model: "moonshot-v1-8k"
-
-test:
-  scope: "full"
-  categories:
-    - jailbreak
-    - injection
-    - harmful
-    - leakage
-    - privacy
-    - multilingual  # v1.1
-    - industry      # v1.1
-
-report:
-  formats: ["json", "markdown", "pdf"]
-  output_dir: "reports"
+- name: Security Test
+  run: |
+    pip install -r requirements.txt
+    python secure_agent.py --plugin llm_security --target "${{ secrets.LLM_API }}"
 ```
 
-## 📈 OWASP LLM Top 10 Coverage
+### GitLab CI
 
-| OWASP ID | Category | Test Coverage |
-|----------|----------|---------------|
-| LLM01 | Prompt Injection | ✅ |
-| LLM02 | Insecure Output | ✅ |
-| LLM03 | Training Data Poisoning | ✅ |
-| LLM04 | Model Denial of Service | ✅ |
-| LLM05 | Supply Chain | ✅ |
-| LLM06 | Sensitive Information | ✅ |
-| LLM07 | Insecure Plugin | ✅ |
-| LLM08 | Excessive Agency | ✅ |
-| LLM09 | Overreliance | ✅ |
-| LLM10 | Model Theft | ✅ |
+```yaml
+security_test:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python secure_agent.py --plugin llm_security --target "$LLM_API"
+```
 
-## 🌍 Industry Compliance
+## 📄 报告示例
 
-### Finance Testing
-- Anti-fraud: Fake records, phishing, investment scams
-- Compliance: KYC, AML, investor suitability
-- Privacy: Financial PII protection
+```json
+{
+  "scanner_name": "SecureAgent",
+  "scanner_version": "2.0.0",
+  "summary": {
+    "total": 100,
+    "passed": 85,
+    "critical_findings": 2
+  }
+}
+```
 
-### Medical Testing
-- Prescription fraud
-- Patient privacy (HIPAA equivalent)
-- Drug safety guidance
+## 📁 文件结构
 
-### Education Testing
-- Academic integrity
-- Minor protection
-- Cheating prevention
+```
+secure-agent/
+├── SKILL.md                 # Skill 定义 (WorkBuddy)
+├── secure_agent.py          # 主入口
+├── requirements.txt         # Python 依赖
+├── LICENSE                 # MIT 许可证
+├── core/                   # 核心框架
+│   ├── __init__.py
+│   └── base.py
+├── plugins/                # 插件系统
+│   ├── __init__.py
+│   └── llm_security.py
+├── scripts/                # 工具脚本
+│   ├── llm_providers.py
+│   ├── report_generator.py
+│   └── test_loader.py
+├── references/             # 测试用例库
+│   ├── test_cases.md
+│   ├── multilingual_cases.md
+│   ├── industry_cases.md
+│   └── config.yaml
+└── tests/                 # 单元测试
+```
 
-## 📄 License
+## 🔗 资源
 
-MIT License - See [LICENSE](LICENSE) for details.
+- 📖 [完整文档](https://github.com/YI597/llm-security-test)
+- 🐛 [问题反馈](https://github.com/YI597/llm-security-test/issues)
+- 💡 [功能建议](https://github.com/YI597/llm-security-test/discussions)
 
-## 🤝 Contributing
+## 📝 更新日志
 
-Issues and Pull Requests are welcome!
+### v2.0.0 (2026-04-28)
+- 🏗️ 重构为通用 Agent Skill 框架
+- 🔌 新增插件系统接口
+- 📦 模块化架构
+- ⚙️ CI/CD 集成支持
 
-## 🔗 Links
-
-- 📖 [Documentation](https://github.com/YI597/llm-security-test)
-- 🐛 [Bug Reports](https://github.com/YI597/llm-security-test/issues)
-- 💡 [Feature Requests](https://github.com/YI597/llm-security-test/discussions)
+### v1.x
+- LLM 安全测试功能开发
 
 ---
 
