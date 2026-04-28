@@ -6,7 +6,7 @@ A powerful security testing skill for evaluating Large Language Model safety, co
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/YI597/llm-security-test)](https://github.com/YI597/llm-security-test/stargazers)
-![Version](https://img.shields.io/badge/Version-1.1-blue)
+![Version](https://img.shields.io/badge/Version-1.2-blue)
 
 ## 🎯 Features
 
@@ -19,6 +19,17 @@ A powerful security testing skill for evaluating Large Language Model safety, co
 | ☠️ Harmful Content | Illegal info, privacy leaks, inappropriate content | 20+ |
 | 🔐 Data Leakage | Training data memory, context isolation | 15+ |
 | 🔒 Privacy Protection | PII recognition, desensitization | 15+ |
+
+### v1.2 Improvements
+
+| Feature | Description |
+|---------|-------------|
+| 🧪 Unit Tests | pytest test suite added |
+| 📦 Dependency Management | requirements.txt added |
+| ⚖️ License | MIT LICENSE file added |
+| 🔒 Security | .gitignore prevents API key leaks |
+| 🚀 Real API Integration | quick_scan.py now calls real LLM APIs |
+| 📚 Test Loader | Loads 400+ cases from YAML/Markdown |
 
 ### v1.1 New Features
 
@@ -47,8 +58,28 @@ Google        → Gemini-Pro
    ```
    ~/.workbuddy/skills/llm-security-test/
    ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 🚀 Quick Start
+
+### Command Line Usage
+
+```bash
+# Set API key
+export LLM_API_KEY="your-api-key"
+
+# Run quick scan
+python scripts/quick_scan.py --provider openai --model gpt-4
+
+# Run with filters
+python scripts/quick_scan.py --provider moonshot -c multilingual -l ja -o reports
+
+# Run tests
+pytest tests/ -v
+```
 
 ### Basic Security Test
 
@@ -84,17 +115,24 @@ Execute: Load industry_cases.md, run finance test cases
 llm-security-test/
 ├── SKILL.md                        # Main skill file
 ├── README.md                       # This file
+├── LICENSE                         # MIT License
+├── requirements.txt                # Python dependencies
+├── pytest.ini                      # Test configuration
+├── .gitignore                      # Git ignore rules
 ├── scripts/
-│   ├── quick_scan.py               # Quick security scanner
-│   ├── injection_detector.py        # Prompt injection detector
-│   ├── llm_providers.py             # LLM API integration (v1.1)
-│   └── report_generator.py          # Report generator (v1.1)
-└── references/
-    ├── test_cases.md                # OWASP LLM Top 10 + core cases (200+)
-    ├── multilingual_cases.md        # Multilingual test cases (100+) - v1.1
-    ├── industry_cases.md            # Industry scenarios (100+) - v1.1
-    ├── scoring.md                   # Scoring standards
-    └── config.yaml                  # Configuration
+│   ├── quick_scan.py               # Quick security scanner (real API)
+│   ├── injection_detector.py       # Prompt injection detector
+│   ├── llm_providers.py            # LLM API integration (v1.1)
+│   ├── report_generator.py         # Report generator (v1.1)
+│   └── test_loader.py              # Test case loader (v1.2)
+├── references/
+│   ├── test_cases.md               # OWASP LLM Top 10 + core cases (200+)
+│   ├── multilingual_cases.md        # Multilingual test cases (100+) - v1.1
+│   ├── industry_cases.md           # Industry scenarios (100+) - v1.1
+│   ├── scoring.md                  # Scoring standards
+│   └── config.yaml                 # Configuration
+└── tests/
+    └── test_loader.py              # Unit tests - v1.2
 ```
 
 ## 📊 Scoring System

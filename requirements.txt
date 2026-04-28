@@ -1,0 +1,30 @@
+# LLM Security Test - Dependencies
+# Version: 1.2.0
+
+# HTTP Requests
+requests>=2.28.0
+httpx>=0.24.0
+
+# LLM API Clients
+openai>=1.0.0
+anthropic>=0.18.0
+zhipuai>=2.0.0
+
+# Report Generation
+reportlab>=4.0.0
+jinja2>=3.1.0
+
+# Configuration
+pyyaml>=6.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.65.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Code Quality
+black>=23.0.0
+flake8>=6.0.0
